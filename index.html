@@ -1,194 +1,199 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Reckonry, record what you reckon before you start</title>
 <meta name="description" content="Reckonry records how long you think something will take, then how long it actually took. No score, no grade, no coaching. Just the record, honestly kept.">
-
-<meta property="og:title" content="Reckonry">
-<meta property="og:description" content="Record what you reckon before you start.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://reckonry.app">
+<meta property="og:title" content="Reckonry">
+<meta property="og:description" content="Record what you reckon before you start.">
 <meta property="og:image" content="https://reckonry.app/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="canonical" href="https://reckonry.app">
+<meta name="theme-color" content="#f8f5f0">
 <link rel="icon" href="/favicon.png">
-
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@72,400;72,500&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css">
+<script defer src="/scripts.js"></script>
 </head>
 <body>
 
-<div class="wrap">
-  <header class="masthead">
-    <img src="/apple-touch-icon.png" alt="">
-    <span class="name">Reckonry</span>
-  </header>
-
-  <div class="hero">
-    <h1>Record what you reckon before you start.</h1>
-    <p class="lede">Say how long you think a task will take. Do the work. See the gap between the two. Reckonry keeps the record and stays quiet about it.</p>
-
-    <div class="specimen" id="specimen">
-      <div class="task" id="sp-task">Review the test procedure</div>
-      <div class="verdict" id="sp-verdict">Ran 44 min over</div>
-      <div class="figures" id="sp-figures">
-        <span>Reckoned 45 min</span><i>/</i><span>Actual 1 hr 29 min</span>
-      </div>
-    </div>
-    <p class="hint">The color is the size of the miss. Nothing else.</p>
-
-    <div class="buy">
-      <a class="cta" href="https://apps.apple.com/us/app/reckonry/id6803737260" rel="noopener">Download on the App Store</a>
-      <span class="price">$4.99 once. iPhone. iOS 26.</span>
-    </div>
+<header class="bar">
+  <div class="bar-inner">
+    <a class="mark" href="/"><img src="/apple-touch-icon.png" alt="" width="34" height="34">Reckonry</a>
+    <nav aria-label="Site">
+      <a href="/support">Support</a>
+      <a class="bar-cta" href="https://apps.apple.com/us/app/reckonry/id6803737260" rel="noopener">Get Reckonry</a>
+    </nav>
   </div>
+</header>
 
-  <section>
-    <p class="eyebrow">How it works</p>
-    <h2>Three moments, and only three.</h2>
-    <div class="moments">
-      <div class="moment">
-        <div class="when">Before</div>
-        <h3>Commit to a number</h3>
-        <p>Pick a duration and start. Two taps from a cold launch, or one from the widget, Control Center, or Siri.</p>
+<!-- The page is a reckoning of its own. Say how long you think reading it
+     will take, and the estimate locks; a slip at the top keeps the clock
+     like a Live Activity; End, here or at the bottom, shows how it landed
+     on the app's five-stage arc. Nothing is stored or sent. -->
+<div class="live" id="live" hidden aria-live="off">
+  <div class="live-inner">
+    <span class="live-dot" aria-hidden="true"></span>
+    <span class="live-task">Read this page</span>
+    <span class="live-clock" id="live-clock">0:00</span>
+    <span class="live-est">Estimate <span id="live-est">2 min</span></span>
+    <button type="button" class="live-end" data-end>End</button>
+  </div>
+</div>
+
+<main>
+
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">An estimate recorder for iPhone and iPad</p>
+      <h1>Record what you reckon before you start.</h1>
+      <p class="lede">
+        Say how long you think a task will take. Do the work. See the gap
+        between the two. Reckonry keeps the record and stays quiet about it.
+      </p>
+      <p class="buy">
+        <a class="button" href="https://apps.apple.com/us/app/reckonry/id6803737260" rel="noopener">Download on the App Store</a>
+        <span>$4.99 once.</span>
+      </p>
+    </div>
+
+    <div class="reckon" id="reckon">
+      <p class="reckon-label">Try one</p>
+      <p class="reckon-task">Read this page</p>
+      <p class="reckon-q">How long do you reckon?</p>
+      <div class="chips" role="group" aria-label="Your estimate">
+        <button type="button" class="chip" data-min="1">1m</button>
+        <button type="button" class="chip" data-min="2">2m</button>
+        <button type="button" class="chip" data-min="3">3m</button>
+        <button type="button" class="chip" data-min="5">5m</button>
       </div>
-      <div class="moment">
-        <div class="when">During</div>
-        <h3>The estimate is locked</h3>
-        <p>A Live Activity keeps the clock on your lock screen. You cannot revise what you thought, which is the entire point.</p>
+      <button type="button" class="start" id="start" disabled>Start</button>
+      <div class="locked" id="locked" hidden>
+        <p class="locked-clock" id="locked-clock">0:00</p>
+        <p class="locked-est">Estimate <span id="locked-est">2 min</span>, locked</p>
+        <button type="button" class="end" data-end>End</button>
       </div>
-      <div class="moment">
-        <div class="when">After</div>
-        <h3>See how it landed</h3>
-        <p>The gap, stated plainly, in words rather than a number to beat. Name it, add a note if you want, and move on.</p>
-      </div>
+      <p class="reckon-note">Pick a number, then start and read on. The estimate locks; you cannot revise it, which is the entire point.</p>
     </div>
   </section>
 
-  <section>
+  <section class="moments">
+    <div class="moment">
+      <p class="when">Before</p>
+      <h3>Commit to a number</h3>
+      <p>Pick a duration and start. Two taps from a cold launch, or one from the widget, Control Center, or Siri.</p>
+    </div>
+    <div class="moment">
+      <p class="when">During</p>
+      <h3>The estimate is locked</h3>
+      <p>A Live Activity keeps the clock on your Lock Screen. You cannot revise what you thought, which is the entire point.</p>
+    </div>
+    <div class="moment">
+      <p class="when">After</p>
+      <h3>See how it landed</h3>
+      <p>The gap, stated plainly, in words rather than a number to beat. Name it, add a note if you want, and move on.</p>
+    </div>
+  </section>
+
+  <section class="arc-sec">
     <p class="eyebrow">The divergence arc</p>
     <h2>Color carries the size of the miss.</h2>
-    <p class="section-lede">Every reckoning lands somewhere on a five-stage arc, set by how far the actual ran from the estimate. Finishing early and finishing late are the same event: you did not know.</p>
-    <div class="arc">
-      <div class="stage s1"><div class="band">Within 10%</div><div class="label">Teal</div></div>
-      <div class="stage s2"><div class="band">10 to 25%</div><div class="label">Petrol</div></div>
-      <div class="stage s3"><div class="band">25 to 50%</div><div class="label">Indigo</div></div>
-      <div class="stage s4"><div class="band">50 to 100%</div><div class="label">Violet</div></div>
-      <div class="stage s5"><div class="band">Beyond 100%</div><div class="label">Magenta</div></div>
-    </div>
-    <p class="arc-note">The home screen carries your median miss across the last fifteen reckonings, so the whole app takes on the color of how your estimates have actually been going. It is a reading, not a grade.</p>
+    <p class="sec-lede">
+      Every reckoning lands somewhere on a five-stage arc, set by how far the
+      actual ran from the estimate. Finishing early and finishing late are
+      the same event: you did not know.
+    </p>
+    <ol class="arc" id="arc">
+      <li data-stage="teal"><b>Teal</b><i>Within 10%</i></li>
+      <li data-stage="petrol"><b>Petrol</b><i>10 to 25%</i></li>
+      <li data-stage="indigo"><b>Indigo</b><i>25 to 50%</i></li>
+      <li data-stage="violet"><b>Violet</b><i>50 to 100%</i></li>
+      <li data-stage="magenta"><b>Magenta</b><i>Beyond 100%</i></li>
+    </ol>
+    <p class="sec-note">The home screen carries your median miss across the last fifteen reckonings, so the whole app takes on the color of how your estimates have actually been going. It is a reading, not a grade.</p>
   </section>
 
-  <section>
+  <section class="app">
     <p class="eyebrow">The app</p>
     <h2>Built for one job, on every surface you already use.</h2>
     <div class="shots">
-      <img src="images/01.png" alt="Starting a reckoning with a duration chip">
-      <img src="images/02.png" alt="A reckoning running against its estimate">
-      <img src="images/03.png" alt="A completed record showing the divergence">
-      <img src="images/04.png" alt="The list of past reckonings">
-      <img src="images/05.png" alt="The home screen at the magenta stage">
-      <img src="images/06.png" alt="A Live Activity on the lock screen">
-      <img src="images/07.png" alt="The home screen widget with duration presets">
+      <figure><img src="/images/shot-home.png" alt="Home at the Petrol stage, a 17 percent median miss, with duration chips to start a reckoning." width="900" height="1955" loading="lazy"><figcaption>Say how long.</figcaption></figure>
+      <figure><img src="/images/shot-running.png" alt="A reckoning running: 23 minutes 2 seconds against an estimate of 45 minutes." width="900" height="1955" loading="lazy"><figcaption>The estimate, locked.</figcaption></figure>
+      <figure><img src="/images/shot-landed.png" alt="Finished 22 minutes early, reckoned 45 minutes, actual 23 minutes, on the Indigo stage." width="900" height="1955" loading="lazy"><figcaption>How it landed.</figcaption></figure>
+      <figure><img src="/images/shot-history.png" alt="The list of past reckonings, each with its estimate, actual and miss." width="900" height="1955" loading="lazy"><figcaption>Every reckoning, kept.</figcaption></figure>
     </div>
+    <figure class="duo">
+      <img src="/images/duo.png" alt="Reckonry on the unfolded iPhone Duo: the list of reckonings beside one record, ran 2 minutes over on Clear the inbox." width="1600" height="1124" loading="lazy">
+      <figcaption>On iPad and iPhone Duo, History shows your list beside the reckoning you pick. New in 1.1, with dark mode and export.</figcaption>
+    </figure>
   </section>
 
-  <section>
-    <div class="refusals">
-      <p class="eyebrow" style="color:#B9B2A8">What it refuses to do</p>
-      <h2>The restraint is the product.</h2>
-      <p class="section-lede">Every estimate tracker eventually becomes a productivity scoreboard. Reckonry will not, and these exclusions are permanent.</p>
-      <ul class="refusal-list">
-        <li>No accuracy score or grade</li>
-        <li>No streaks to protect</li>
-        <li>No AI insights or coaching</li>
-        <li>No suggested estimates</li>
-        <li>No progress bar racing your deadline</li>
-        <li>No leaderboards or ranking</li>
-        <li>No trends telling you what you are</li>
-        <li>No notifications nagging you</li>
-      </ul>
-      <p class="close">A prediction you made honestly is worth more than one the app helped you get right. Reckonry preserves what you thought, not what you should have thought.</p>
-    </div>
+  <section class="refuse">
+    <p class="eyebrow">What it refuses to do</p>
+    <h2>The restraint is the product.</h2>
+    <p class="sec-lede">Every estimate tracker eventually becomes a productivity scoreboard. Reckonry will not, and these exclusions are permanent.</p>
+    <ul class="ledger">
+      <li>Accuracy score or grade</li>
+      <li>Streaks to protect</li>
+      <li>AI insights or coaching</li>
+      <li>Suggested estimates</li>
+      <li>A progress bar racing your deadline</li>
+      <li>Leaderboards or ranking</li>
+      <li>Trends telling you what you are</li>
+      <li>Notifications nagging you</li>
+    </ul>
+    <p class="close">A prediction you made honestly is worth more than one the app helped you get right. Reckonry preserves what you thought, not what you should have thought.</p>
   </section>
 
-  <section class="privacy">
-    <p class="eyebrow">Privacy</p>
+  <!-- How it landed. Before a reckoning starts this shows records from the
+       app's own sample set; after End it shows the visitor's. -->
+  <section class="landed" id="landed">
+    <p class="eyebrow">How it landed</p>
+    <div class="result" id="result" data-stage="violet">
+      <p class="result-task" id="r-task">Review the test procedure</p>
+      <p class="result-verdict" id="r-verdict">Ran 44 min over</p>
+      <p class="result-figures" id="r-figures">Reckoned 45 min · Actual 1 hr 29 min</p>
+      <p class="result-stage"><span id="r-stage">Violet</span> · <span id="r-band">50 to 100%</span></p>
+    </div>
+    <p class="landed-note" id="landed-note">An example from the app. Start a reckoning at the top of the page to see your own here.</p>
+    <p class="landed-actions">
+      <button type="button" class="end big" data-end hidden id="end-here">End and see</button>
+      <button type="button" class="again" id="again" hidden>Reckon again</button>
+    </p>
+  </section>
+
+  <section class="private">
     <h2>Your record never leaves your devices.</h2>
-    <p>Reckonry stores everything on your iPhone and syncs through your own iCloud account. There are no accounts to create, no servers to trust, and no analytics of any kind. Nobody at KSQ Studios can see a single reckoning you have made.</p>
+    <p>
+      Reckonry stores everything on your iPhone and syncs through your own
+      iCloud account. There are no accounts to create, no servers to trust,
+      and no analytics of any kind. Nobody at KSQ Studios can see a single
+      reckoning you have made.
+    </p>
+    <p class="buy">
+      <a class="button" href="https://apps.apple.com/us/app/reckonry/id6803737260" rel="noopener">Download on the App Store</a>
+    </p>
   </section>
 
-  <footer>
-    <div class="foot-grid">
-      <div>
-        <div class="foot-title">Reckonry</div>
-        <a href="https://apps.apple.com/us/app/reckonry/id6803737260" rel="noopener">Download on the App Store</a>
-        <a href="mailto:techsupport@ksqstudios.com">techsupport@ksqstudios.com</a>
-      </div>
-      <div>
-        <div class="foot-title">Also from KSQ Studios</div>
-        <a href="https://minuted.org">Minuted, meeting cost</a>
-        <a href="https://winnowed.app">Winnowed, subscriptions</a>
-        <a href="https://eclipsedsleep.app">Eclipsed, sleep debt</a>
-      </div>
-      <div>
-        <div class="foot-title">More</div>
-        <a href="https://endured.app">Endured, focus sessions</a>
-        <a href="https://vesperine.app">Vesperine</a>
-        <a href="https://brightened.app">Brightened, daylight</a>
-      </div>
-      <div>
-        <div class="foot-title">Studio</div>
-        <a href="https://ksqstudios.com">ksqstudios.com</a>
-        <a href="/privacy.html">Privacy policy</a>
-      </div>
-    </div>
-    <p class="colophon">KSQ Studios LLC, Berwyn, Pennsylvania. Made on a laptop, one app at a time.</p>
-  </footer>
-</div>
+</main>
 
-<script>
-(function(){
-  var specimens = [
-    {task:"Clear the inbox",              verdict:"Within a minute of the estimate", reckoned:"Reckoned 15 min", actual:"Actual 16 min",        stage:["#1F5F5B","#3E8A82"]},
-    {task:"Prep for the design review",   verdict:"Ran 12 min over",                 reckoned:"Reckoned 1 hr",   actual:"Actual 1 hr 12 min",   stage:["#2E4E6E","#4E7899"]},
-    {task:"Sort the garage shelf",        verdict:"Finished 38 min early",           reckoned:"Reckoned 2 hr",   actual:"Actual 1 hr 22 min",   stage:["#46406E","#6E689C"]},
-    {task:"Review the test procedure",    verdict:"Ran 44 min over",                 reckoned:"Reckoned 45 min", actual:"Actual 1 hr 29 min",   stage:["#6E3A78","#9A5FA6"]},
-    {task:"Rework the cost estimate",     verdict:"Ran 4 hr 20 min over",            reckoned:"Reckoned 3 hr",   actual:"Actual 7 hr 20 min",   stage:["#8E2358","#C04A80"]}
-  ];
-
-  var el = document.getElementById("specimen");
-  var task = document.getElementById("sp-task");
-  var verdict = document.getElementById("sp-verdict");
-  var figures = document.getElementById("sp-figures");
-  var i = 3;
-
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduced) return;
-
-  function render(s){
-    el.style.background = "linear-gradient(135deg," + s.stage[0] + "," + s.stage[1] + ")";
-    task.textContent = s.task;
-    verdict.textContent = s.verdict;
-    figures.innerHTML = "<span>" + s.reckoned + "</span><i>/</i><span>" + s.actual + "</span>";
-    [task, verdict, figures].forEach(function(n){
-      n.classList.remove("fade");
-      void n.offsetWidth;
-      n.classList.add("fade");
-    });
-  }
-
-  setInterval(function(){
-    i = (i + 1) % specimens.length;
-    render(specimens[i]);
-  }, 4200);
-})();
-</script>
+<footer class="foot">
+  <div class="foot-inner">
+    <nav aria-label="Footer">
+      <a href="/privacy">Privacy</a>
+      <a href="/support">Support</a>
+      <a href="https://ksqstudios.com">KSQ Studios</a>
+    </nav>
+    <p>Reckonry is designed, built, and supported by one person, Kurt Klein, in Berwyn, Pennsylvania, under KSQ Studios. Write to <a href="mailto:techsupport@ksqstudios.com">techsupport@ksqstudios.com</a>.</p>
+    <p>2026 KSQ Studios LLC.</p>
+  </div>
+</footer>
 
 </body>
 </html>

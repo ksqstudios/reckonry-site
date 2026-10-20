@@ -5,16 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Reckonry 1.1</title>
 <meta name="description" content="Reckonry 1.1 adds dark mode and export, plus native layouts for iPad and iPhone Duo.">
+<meta name="theme-color" content="#f8f5f0">
 <link rel="icon" href="/favicon.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="canonical" href="https://reckonry.app/event/duo">
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@72,400;72,500&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css">
 </head>
-<body>
+<body class="doc-page">
 
 <!--
   Fallback for the v1.1 In-App Event link. With Reckonry installed, iOS
@@ -24,19 +25,24 @@
   correctly the instant it paints.
 -->
 
-<div class="wrap-support">
-  <a class="masthead" href="/">
-    <img src="/apple-touch-icon.png" alt="">
-    <span class="name">Reckonry</span>
-  </a>
-</div>
+<header class="bar">
+  <div class="bar-inner">
+    <a class="mark" href="/"><img src="/apple-touch-icon.png" alt="" width="34" height="34">Reckonry</a>
+    <nav aria-label="Site">
+      <a href="/support">Support</a>
+      <a class="bar-cta" href="https://apps.apple.com/us/app/reckonry/id6803737260" rel="noopener">Get Reckonry</a>
+    </nav>
+  </div>
+</header>
 
-<div class="wrap-support page-head">
+<main class="doc">
   <h1>Reckonry 1.1</h1>
   <p class="lede">Dark mode and export, plus native layouts for iPad and iPhone Duo.</p>
-</div>
 
-<div class="wrap-support page-body">
+  <figure class="duo">
+    <img src="/images/duo.png" alt="Reckonry on the unfolded iPhone Duo: the list of reckonings beside one record, ran 2 minutes over on Clear the inbox." width="1600" height="1124">
+  </figure>
+
 
   <div class="qa">
     <h2>Dark mode</h2>
@@ -54,15 +60,21 @@
   </div>
 
   <div class="buy">
-    <a class="cta" href="https://apps.apple.com/us/app/reckonry/id6803737260" rel="noopener">Download on the App Store</a>
+    <a class="button" href="https://apps.apple.com/us/app/reckonry/id6803737260" rel="noopener">Download on the App Store</a>
   </div>
 
-</div>
+</main>
 
-<div class="wrap-support foot-simple">
-  <p><a href="/">Reckonry</a> is made by KSQ Studios LLC, Berwyn, Pennsylvania.</p>
-  <p><a href="/support">Support</a> &middot; <a href="/privacy">Privacy policy</a></p>
-</div>
+<footer class="foot">
+  <div class="foot-inner">
+    <nav aria-label="Footer">
+      <a href="/privacy">Privacy</a>
+      <a href="/support">Support</a>
+      <a href="https://ksqstudios.com">KSQ Studios</a>
+    </nav>
+    <p>2026 KSQ Studios LLC.</p>
+  </div>
+</footer>
 
 </body>
 </html>
