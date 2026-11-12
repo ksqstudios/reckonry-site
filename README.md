@@ -12,6 +12,7 @@ A ledger of estimates: cream paper, IBM Plex Mono for headings and figures as th
 ├── privacy.html       # privacy policy
 ├── support.html       # support page
 ├── event/duo.html     # 1.1 In-App Event page (deep link target)
+├── event/pause.html   # 1.2 In-App Event page (deep link target)
 ├── styles.css         # shared stylesheet
 ├── scripts.js         # the page's own reckoning
 ├── _headers           # Cloudflare Pages headers
